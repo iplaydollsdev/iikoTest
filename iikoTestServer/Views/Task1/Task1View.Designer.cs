@@ -55,6 +55,7 @@
             // 
             // entitiesDropdown
             // 
+            this.entitiesDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.entitiesDropdown.FormattingEnabled = true;
             this.entitiesDropdown.Location = new System.Drawing.Point(30, 132);
             this.entitiesDropdown.Name = "entitiesDropdown";
