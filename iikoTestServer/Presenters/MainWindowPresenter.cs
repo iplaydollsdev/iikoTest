@@ -7,6 +7,8 @@ using iikoTestServer.Models;
 using iikoTestServer.Presenters;
 using iikoTestServer.Views.Task3;
 using iikoTestServer.Models.Task3;
+using System.Collections.Generic;
+using System.Linq;
 
 public class MainWindowPresenter
 {
@@ -20,13 +22,16 @@ public class MainWindowPresenter
 
         _view.LoginButtonClicked += async (sender, args) => await Login();
         _view.LogoutButtonClicked += async (sender, args) => await Logout();
-        _view.FormLoaded += (sender, args) => OnFormLoaded();
-        _view.FormClosedCustom += (sender, args) => OnFormClosed();
+        _view.FormLoaded += async (sender, args) => await Login();
+        _view.FormClosedCustom += (sender, args) => _ = Logout();
 
         _view.Task1ButtonClicled += View_Task1ButtonClicled;
+        _view.Task2ButtonClicked += View_Task2ButtonClicked;
         _view.Task3ButtonClicked += View_Task3ButtonClicked;
         _view.Task4ButtonClicked += View_Task4ButtonClicked;
     }
+
+
 
     private async void View_Task1ButtonClicled(object sender, EventArgs e)
     {
@@ -35,6 +40,16 @@ public class MainWindowPresenter
         Task1Model task1Model = new(entities);
         Task1Presenter task1Presenter = new(task1View, task1Model);
         _view.LoadViewInPanel(task1View);
+    }
+
+    private async void View_Task2ButtonClicked(object sender, EventArgs e)
+    {
+        var product = await _dataService.GetProductDto("66d99615-14fc-473d-b1e3-a18d51e7fe9b");
+
+        ITask2View task2View = new Task2View();
+        Task2Model task2Model = new(product);
+        Task2Presenter task2Presenter = new( task2View, task2Model, _dataService);
+        _view.LoadViewInPanel(task2View);
     }
 
     private async void View_Task3ButtonClicked(object sender, EventArgs e)
@@ -46,10 +61,12 @@ public class MainWindowPresenter
         _view.LoadViewInPanel(task3View);
     }
 
-    private async void View_Task4ButtonClicked(object sender, EventArgs e)
+    private void View_Task4ButtonClicked(object sender, EventArgs e)
     {
-        var recipes = await _dataService.GetRecipe("66d99615-14fc-473d-b1e3-a18d51e7fe9b");
-        var testProduct = await _dataService.GetProductById(recipes.PreparedCharts[0].Items[0].ProductId);
+        ITask4View task4View = new Task4View();
+        Task4Model task4Model = new();
+        Task4Presenter task4Presenter = new(task4Model, task4View, _dataService);
+        _view.LoadViewInPanel(task4View);
     }
 
     private async Task Login()
@@ -57,8 +74,6 @@ public class MainWindowPresenter
         try
         {
             await _dataService.Login("user", "user#test");
-            var response = await _dataService.GetProducts();
-            _view.UpdateResponseLabel(response);
             _view.VisualLogin(isLoggedIn: true);
         }
         catch (Exception ex)
@@ -78,15 +93,5 @@ public class MainWindowPresenter
         {
             _view.UpdateResponseLabel(ex.Message);
         }
-    }
-
-    private async void OnFormLoaded()
-    {
-        await Login();
-    }
-
-    private void OnFormClosed()
-    {
-        _ = Logout();
     }
 }

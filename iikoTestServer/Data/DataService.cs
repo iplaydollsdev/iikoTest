@@ -85,39 +85,21 @@ namespace iikoTestServer.Data
             }
         }
 
-        public async Task<string> GetProducts()
+        public async Task<List<ProductModel>> GetProductsById(params string[] ids)
         {
+            var idsString = string.Join("&ids=", ids);
             var queryParameters = new Dictionary<string, string>
             {
-                { "includeDeleted", "true" },
+                { "includeDeleted", "false" },
                 { "key", _authToken }
             };
 
-            var response = await SendRequestWithQueryParameters(HttpMethod.Get, "v2/entities/products/list", queryParameters);
+            var queryString = $"?ids={idsString}";
+
+            var response = await SendRequestWithQueryParameters(HttpMethod.Get, "v2/entities/products/list" + queryString, queryParameters);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                return response.ReasonPhrase;
-            }
-        }
-
-        public async Task<ProductModel> GetProductById(string id)
-        {
-            var queryParameters = new Dictionary<string, string>
-            {
-                { "includeDeleted", "true" },
-                { "ids", id },
-                { "key", _authToken }
-            };
-
-            var response = await SendRequestWithQueryParameters(HttpMethod.Get, "v2/entities/products/list", queryParameters);
-            if (response.IsSuccessStatusCode)
-            {
-                var list = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
-                return list.FirstOrDefault();
+                return await response.Content.ReadFromJsonAsync<List<ProductModel>>();
             }
             else
             {
@@ -170,23 +152,45 @@ namespace iikoTestServer.Data
             }
         }
 
-        public async Task<string> UpdateProduct()
+        public async Task<ErrorDto> UpdateProduct(ProductRequestDto productDto)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                { "overrideFastCode", "false" },
-                { "overrideNomenclatureCode", "false" },
+                { "overrideFastCode", "true" },
+                { "overrideNomenclatureCode", "true" },
                 { "key", _authToken }
             };
 
-            var response = await SendRequestWithQueryParameters(HttpMethod.Post, "v2/entities/products/update", queryParameters);
+            var content = JsonContent.Create(productDto);
+            var response = await SendRequestWithQueryParameters(HttpMethod.Post, "v2/entities/products/update", queryParameters, content);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                return await response.Content.ReadFromJsonAsync<ErrorDto>();
             }
             else
             {
-                return response.ReasonPhrase;
+                return null;
+            }
+        }
+
+        public async Task<ProductResponseDto> GetProductDto(string id)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                { "includeDeleted", "false" },
+                { "ids", id },
+                { "key", _authToken }
+            };
+
+            var response = await SendRequestWithQueryParameters(HttpMethod.Get, "v2/entities/products/list", queryParameters);
+            if (response.IsSuccessStatusCode)
+            {
+                var productDtos = await response.Content.ReadFromJsonAsync<List<ProductResponseDto>>();
+                return productDtos.FirstOrDefault();
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -203,8 +207,6 @@ namespace iikoTestServer.Data
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<ChartResultModel>();
-                var test = await response.Content.ReadAsStringAsync();
-                return null;
             }
             else
             {
@@ -212,7 +214,7 @@ namespace iikoTestServer.Data
             }
         }
 
-        public async Task<HttpResponseMessage> SendRequestWithQueryParameters(HttpMethod method, string endpoint, Dictionary<string, string> queryParameters)
+        public async Task<HttpResponseMessage> SendRequestWithQueryParameters(HttpMethod method, string endpoint, Dictionary<string, string> queryParameters, HttpContent content = null)
         {
             var client = _httpClientFactory.CreateClient();
 
@@ -227,6 +229,8 @@ namespace iikoTestServer.Data
             uriBuilder.Query = query.ToString();
 
             var request = new HttpRequestMessage(method, uriBuilder.Uri);
+            if (content != null)
+                request.Content = content;
 
             HttpResponseMessage response = await client.SendAsync(request);
 

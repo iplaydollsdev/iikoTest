@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.responseLabel = new System.Windows.Forms.Label();
             this.sidebarPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.statusPanel = new System.Windows.Forms.Panel();
             this.loginLabel = new System.Windows.Forms.Label();
@@ -52,15 +51,6 @@
             this.panel3.SuspendLayout();
             this.taskPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // responseLabel
-            // 
-            this.responseLabel.AutoSize = true;
-            this.responseLabel.Location = new System.Drawing.Point(429, 117);
-            this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(35, 13);
-            this.responseLabel.TabIndex = 0;
-            this.responseLabel.Text = "label1";
             // 
             // sidebarPanel
             // 
@@ -159,7 +149,7 @@
             this.taskButton1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.taskButton1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskButton1.FlatAppearance.BorderSize = 0;
-            this.taskButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.taskButton1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.taskButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.taskButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.taskButton1.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -192,7 +182,7 @@
             this.taskButton2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.taskButton2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskButton2.FlatAppearance.BorderSize = 0;
-            this.taskButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.taskButton2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.taskButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.taskButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.taskButton2.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -225,7 +215,7 @@
             this.taskButton3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.taskButton3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskButton3.FlatAppearance.BorderSize = 0;
-            this.taskButton3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.taskButton3.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.taskButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.taskButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.taskButton3.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -258,7 +248,7 @@
             this.taskButton4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.taskButton4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskButton4.FlatAppearance.BorderSize = 0;
-            this.taskButton4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.taskButton4.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.taskButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.taskButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.taskButton4.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -276,6 +266,7 @@
             // 
             // controlContainerPanel
             // 
+            this.controlContainerPanel.BackColor = System.Drawing.SystemColors.Control;
             this.controlContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.controlContainerPanel.Location = new System.Drawing.Point(200, 0);
             this.controlContainerPanel.Name = "controlContainerPanel";
@@ -289,7 +280,6 @@
             this.ClientSize = new System.Drawing.Size(884, 561);
             this.Controls.Add(this.controlContainerPanel);
             this.Controls.Add(this.sidebarPanel);
-            this.Controls.Add(this.responseLabel);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MinimumSize = new System.Drawing.Size(900, 600);
             this.Name = "MainWindow";
@@ -307,14 +297,12 @@
             this.panel3.ResumeLayout(false);
             this.taskPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.Label responseLabel;
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.FlowLayoutPanel sidebarPanel;
         private System.Windows.Forms.Panel statusPanel;

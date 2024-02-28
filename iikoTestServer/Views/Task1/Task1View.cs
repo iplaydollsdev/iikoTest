@@ -25,6 +25,7 @@ namespace iikoTestServer.Views
             {
                 entitiesDropdown.Items.Add(entity.Name);
             }
+            entitiesDropdown.SelectedIndex = 0;
         }
     }
 }

@@ -59,7 +59,7 @@
             // 
             this.recipeNameText.AutoSize = true;
             this.recipeNameText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.recipeNameText.Location = new System.Drawing.Point(27, 139);
+            this.recipeNameText.Location = new System.Drawing.Point(27, 129);
             this.recipeNameText.Name = "recipeNameText";
             this.recipeNameText.Size = new System.Drawing.Size(0, 20);
             this.recipeNameText.TabIndex = 2;
@@ -76,6 +76,7 @@
             // 
             // ingredientsListBox
             // 
+            this.ingredientsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ingredientsListBox.HideSelection = false;
             this.ingredientsListBox.Location = new System.Drawing.Point(31, 211);
             this.ingredientsListBox.Name = "ingredientsListBox";
